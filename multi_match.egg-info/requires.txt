@@ -1,0 +1,7 @@
+numpy
+ortools>=9.4
+scipy
+matplotlib
+scikit-image
+matplotlib_scalebar
+pandas
