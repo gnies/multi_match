@@ -5,9 +5,9 @@ from multi_match.colorify import multichannel_to_rgb
 import multi_match
 
 # First we read some example images
-image_A = io.imread('example_data/STAR RED_STED {7}.tif')
-image_B = io.imread('example_data/Alexa 488_STED {12}.tif')
-image_C = io.imread('example_data/Alexa 594_STED {7}.tif')
+image_A = io.imread('example_data/channel_A.tif')
+image_B = io.imread('example_data/channel_B.tif')
+image_C = io.imread('example_data/channel_C.tif')
 
 # We now can perform a point detection
 x = multi_match.point_detection(image_A)
@@ -15,7 +15,7 @@ y = multi_match.point_detection(image_B)
 z = multi_match.point_detection(image_C)
 
 # And find the matching within a certain distance
-maxdist = 3.5 # in pixel size
+maxdist = 8.5 # in pixel size
 match = multi_match.Multi_Matching([x, y, z], maxdist)
 
 # And count the number of different objects in the image:
@@ -24,8 +24,9 @@ for key, value in num_obj.items():
     print(key, ' : ', value)
 
 # the matches can be plotted
-# match.plot_match(channel_colors=["tab:red", "palegreen", "cyan"], circle_alpha=0.5)
-match.plot_circles(color="white")
+match.plot_match(channel_colors=["tab:red", "palegreen", "cyan"],
+        circle_alpha=0.7, circle_color="white", scatter_size=4,
+        scatter_edgecolors="white", segment_color="white")
 
 # And the multicolor image can be plotted in the background
 ax = plt.gca()

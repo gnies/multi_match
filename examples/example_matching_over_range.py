@@ -7,13 +7,13 @@ from multi_match.colorify import multichannel_to_rgb
 import multi_match
 
 min_slider_value = 0
-max_slider_value = 5
+max_slider_value = 10
 max_dist_range = np.linspace(min_slider_value, max_slider_value, 30)
 
 # First we read some example images
-image_A = io.imread('example_data/STAR RED_STED {7}.tif')
-image_B = io.imread('example_data/Alexa 488_STED {12}.tif')
-image_C = io.imread('example_data/Alexa 594_STED {7}.tif')
+image_A = io.imread('example_data/channel_A.tif')
+image_B = io.imread('example_data/channel_B.tif')
+image_C = io.imread('example_data/channel_C.tif')
 
 # We now can perform a point detection
 x = multi_match.point_detection(image_A)
@@ -44,4 +44,6 @@ ax.add_artist(scalebar)
 background_image, _, __ = multichannel_to_rgb(images=np.stack([image_A, image_B, image_C]), cmaps=cmaps)
 
 colors = ["tab:red", "palegreen", "cyan"]
-mmr.plot_match(channel_colors=colors)
+mmr.plot_match(channel_colors=colors,
+        circle_alpha=0.7, circle_color="white", scatter_size=4,
+        scatter_edgecolors="white", segment_color="white")

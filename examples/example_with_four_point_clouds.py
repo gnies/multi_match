@@ -14,6 +14,7 @@ for key, value in num_obj.items():
     print(key, ' : ', value)
 # the matches can be plotted
 match.plot_match(channel_colors=colors, circle_alpha=0.5)
+plt.axis()
 plt.show()
 
 ##### object count over matching range

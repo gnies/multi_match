@@ -16,9 +16,11 @@ nm_per_pixel = 1/0.04
 scale = (nm_per_pixel, nm_per_pixel)
 
 # First we read some example images
-image_A = io.imread('example_data/STAR RED_STED {7}.tif')
-image_B = io.imread('example_data/Alexa 488_STED {12}.tif')
-image_C = io.imread('example_data/Alexa 594_STED {7}.tif')
+# First we read some example images
+image_A = io.imread('example_data/channel_A.tif')
+image_B = io.imread('example_data/channel_B.tif')
+image_C = io.imread('example_data/channel_C.tif')
+
 new_layer = viewer.add_image(image_A, colormap='magenta', blending="additive", 
         scale=scale)
 new_layer = viewer.add_image(image_B, colormap='green', blending="additive", 
