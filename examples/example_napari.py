@@ -17,9 +17,9 @@ scale = (nm_per_pixel, nm_per_pixel)
 
 # First we read some example images
 # First we read some example images
-image_A = io.imread('example_data/channel_A.tif')
-image_B = io.imread('example_data/channel_B.tif')
-image_C = io.imread('example_data/channel_C.tif')
+image_A = io.imread('example_data/Alexa 594_STED {7}.tif')
+image_B = io.imread('example_data/Alexa 488_STED {12}.tif')
+image_C = io.imread('example_data/STAR RED_STED {7}.tif')
 
 new_layer = viewer.add_image(image_A, colormap='magenta', blending="additive", 
         scale=scale)
@@ -71,3 +71,4 @@ shapes_layer.add(
     edge_color='white',
     face_color=[0]*4,
 )
+napari.run()
