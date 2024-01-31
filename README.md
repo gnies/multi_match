@@ -1,12 +1,12 @@
 # Multi-Match
 
-This repository includes a Python package to perform object-based multi-color colocalization analysis on super-resolution microscopy data using tools from optimal transport. Its algorithms are based on a soon-to-be-published article called "MultiMatch: Optimal Matching Colocalization in Multi-Color Super-Resolution Microscopy" by Julia Naas, Giacomo Nies, Housen Li, Stefan Stoldt, Bernhard Schmitzer, Stefan Jakobs and Axel Munk.
+This repository includes a Python package to perform object-based multi-color colocalization analysis on super-resolution microscopy data using tools from optimal transport. Its algorithms are based on a soon to be published article called "MultiMatch: Optimal Matching Colocalization in Multi-Color Super-Resolution Microscopy" by Julia Naas, Giacomo Nies, Housen Li, Stefan Stoldt, Bernhard Schmitzer, Stefan Jakobs and Axel Munk.
 
 #### Pip installation
 
-One can install the package by navigating to the folder in which compressed `multi_match-0.0.1.tar.gz` is stored and then execute
+One can install this package with pip by executing the following comand:
 ```console
-pip install multi_match-0.0.1.tar.gz
+pip install https://github.com/gnies/multi_match
 ```
 
 #### Short example
@@ -22,9 +22,10 @@ from multi_match.colorify import multichannel_to_rgb
 import multi_match
 
 # First we read some example images
-image_A = io.imread('./example_data/STAR RED_STED {7}.tif')
-image_B = io.imread('./example_data/Alexa 488_STED {12}.tif')
-image_C = io.imread('./example_data/Alexa 594_STED {7}.tif')
+# First we read some example images
+image_A = io.imread('example_data/channel_A.tif')
+image_B = io.imread('example_data/channel_B.tif')
+image_C = io.imread('example_data/channel_C.tif')
 
 # We now can perform a point detection
 x = multi_match.point_detection(image_A)
@@ -76,8 +77,10 @@ w_C  :  260
 
 ![Example_MultiMatch](https://user-images.githubusercontent.com/72695751/202760361-afefdbbb-ea7b-4efe-b4bd-d014e76ac7ee.png)
 
+You can interactively modify the maximum matching radius, as shown in the provided [example](https://github.com/gnies/multi_match/blob/master/examples/example_matching_over_range.py). This also allows you to plot the detected abundance count against the varying maximum matching distance.
 
 #### References
 
-To reproduce figures of the paper "MultiMatch: Optimal Matching Colocalization in Multi-Color Super-Resolution Microscopy" by Naas et al. run the scripts located in [Zenodo](https://doi.org/10.5281/zenodo.7221879).
+This repository contains software related to a paper that has not been published: 
 
+"MultiMatch: Optimal Matching Colocalization in Multi-Color Super-Resolution Microscopy" by Julia Naas, Giacomo Nies, Housen Li, Stefan Stoldt, Bernhard Schmitzer, Stefan Jakobs and Axel Munk. 
