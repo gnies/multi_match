@@ -6,7 +6,7 @@ This repository includes a Python package to perform object-based multi-color co
 
 One can install this package with pip by executing the following comand:
 ```console
-pip install https://github.com/gnies/multi_match
+pip install git+https://github.com/gnies/multi_match
 ```
 
 #### Short example
