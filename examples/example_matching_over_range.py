@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from skimage import io
 from matplotlib_scalebar.scalebar import ScaleBar
 from multi_match.colorify import multichannel_to_rgb
+import os 
 
 import multi_match
 
@@ -10,10 +11,15 @@ min_slider_value = 0
 max_slider_value = 10
 max_dist_range = np.linspace(min_slider_value, max_slider_value, 30)
 
-# First we read some example images
-image_A = io.imread('example_data/channel_A.tif')
-image_B = io.imread('example_data/channel_B.tif')
-image_C = io.imread('example_data/channel_C.tif')
+# First we read the example image
+
+file_A = os.path.join('example_data', 'channel_A.tif')
+file_B = os.path.join('example_data', 'channel_B.tif')
+file_C = os.path.join('example_data', 'channel_C.tif')
+
+image_A = io.imread(file_A)
+image_B = io.imread(file_B)
+image_C = io.imread(file_C)
 
 # We now can perform a point detection
 x = multi_match.point_detection(image_A)

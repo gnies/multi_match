@@ -5,8 +5,7 @@ ROOT = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(ROOT, 'README.md'), encoding="utf-8") as f:
     README = f.read()
 
-# name is not fixed yet
-# version 0 (i.e. not ready yet)
+# version 1
 setup(name='multi_match',
       version='0.0.1',
       description='A package to detect chains.',
@@ -15,7 +14,7 @@ setup(name='multi_match',
       long_description_content_type="text/markdown",
       long_description=README,
       license='MIT',
-      packages=['multi_match'], # preliminary name
+      packages=['multi_match'],
       include_package_data=True,
       install_requires=[
           'numpy',
