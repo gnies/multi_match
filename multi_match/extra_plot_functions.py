@@ -97,7 +97,7 @@ def plot_relative_abundances_estimation(mm, s_a, s_b, s_c, alpha=0.05):
     ax[2].set_ylim((-0.00, 1.00))
     plt.show()
 
-def cumulative_plot_number_of_matches(mm):
+def cumulative_plot_number_of_matches(mm, show=True):
     """ Plots number of matches as a function of the maximal matching distance given a data frame."""
     if mm.number_of_objects is None:
         mm.count_objects()
@@ -178,7 +178,8 @@ def cumulative_plot_number_of_matches(mm):
         return a / n_z
     secax = ax[2].secondary_yaxis('right', functions=(prob_to_abs, abs_to_prob))
     secax.set_ylabel("Number of points")
-    plt.show()
+    if show:
+        plt.show()
 
 def plot_relative_abundances(mm):
     """ Plots number of matches as a function of the maximal matching distance given a data frame."""
@@ -258,7 +259,7 @@ def plot_relative_abundances(mm):
     secax.set_ylabel("Number of points")
     plt.show()
 
-def plot_number_of_matches(mm):
+def plot_number_of_matches(mm, show=True):
     """ Plots number of matches as a function of the maximal matching distance given a data frame."""
     if mm.number_of_objects is None:
         mm.count_objects()
@@ -296,4 +297,5 @@ def plot_number_of_matches(mm):
     ax[2].plot(maxdist_range, n_bc/n_z, label="BC", color="tab:blue")
     ax[2].legend(loc="upper left")
     ax[2].set_xlabel("Maximum matching distance in pixel")
-    plt.show()
+    if show:
+        plt.show()

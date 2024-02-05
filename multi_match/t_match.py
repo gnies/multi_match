@@ -2,20 +2,14 @@ from .min_cost_flow import min_cost_flow_ortools as mcf
 import numpy as np
 from scipy.spatial.distance import cdist
 
-def maximal_triplet_match(x, y, z, maxdist, cost_function="euclidean"):
+def maximal_triplet_match(cost_xy, cost_yz, maxdist, cost_function="euclidean"):
     """Match maximal number of triples x-y-z under a certain distance"""
-
-    n_x = len(x)
-    n_y = len(y)
-    n_z = len(z)
+    n_x, n_y = cost_xy.shape
+    n_y, n_z = cost_yz.shape
 
     if n_x==0 or n_y==0 or n_z==0:
         res = [], [], []
     else:
-
-        cost_xy = cdist(x, y, cost_function)
-        cost_yz = cdist(y, z, cost_function)
-
         I, J1 = np.where(cost_xy <= maxdist)
         J2, K = np.where(cost_yz <= maxdist)
         if len(I)==0 or len(J2)==0:
@@ -51,20 +45,3 @@ def glue_matches(A, B1, B2, C):
         res = A, B1, C_perm
     return res
 
-if __name__=="__main__":
-    np.random.seed(0)
-    
-    # create artificial data
-    # unbalanced number of points
-    n_x = 20
-    n_y = 18
-    n_z = 32
-    
-    # select random points
-    x = np.random.random(size = (n_x, 2)) 
-    y = np.random.random(size = (n_y, 2)) 
-    z = np.random.random(size = (n_z, 2)) 
-
-    maxdist = 0.2 
-    res = maximal_triplet_match(x, y, z, maxdist, cost_function="euclidean")
-    print(res)

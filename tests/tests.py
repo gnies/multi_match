@@ -40,37 +40,37 @@ class TestSum(unittest.TestCase):
                         'w_C': 2, 'w_D': 5}
                 assert true_num_obj == num_obj
                 
-        # def test_costum_cost_pairwise(self):
-        #         from scipy.spatial.distance import cdist
-        #         np.random.seed(2)
-        #         ns = [11, 23, 13, 9]
-        #         max_dist = 0.1
-        #         point_lst = [np.random.random(size= (n_j, 2)) for n_j in ns]
-        #         cost_lst = [cdist(point_lst[i], point_lst[i+1]) for i in range(len(point_lst)-1)]
-        #         match = multi_match.Multi_Matching(point_lst, cost_matrix_lst=cost_lst, max_dist=max_dist,
-        #         method="pairwise")
-        #         # And count the number of different objects in the image:
-        #         num_obj = match.count_objects()
-        #         true_num_obj = {'w_ABCD': 1, 'w_ABC': 3, 'w_BCD': 2, 'w_AB': 2,
-        #         'w_BC': 4, 'w_CD': 1, 'w_A': 5, 'w_B': 11,
-        #         'w_C': 2, 'w_D': 5}
-        #         assert true_num_obj == num_obj
+        def test_costum_cost_pairwise(self):
+                from scipy.spatial.distance import cdist
+                np.random.seed(2)
+                ns = [11, 23, 13, 9]
+                max_dist = 0.1
+                point_lst = [np.random.random(size= (n_j, 2)) for n_j in ns]
+                cost_lst = [cdist(point_lst[i], point_lst[i+1]) for i in range(len(point_lst)-1)]
+                match = multi_match.Multi_Matching(point_lst, max_dist=max_dist,
+                method="pairwise", cost_list=cost_lst)
+                # And count the number of different objects in the image:
+                num_obj = match.count_objects()
+                true_num_obj = {'w_ABCD': 1, 'w_ABC': 3, 'w_BCD': 2, 'w_AB': 2,
+                'w_BC': 4, 'w_CD': 1, 'w_A': 5, 'w_B': 11,
+                'w_C': 2, 'w_D': 5}
+                assert true_num_obj == num_obj
 
-        # def test_costum_cost_triplets(self):
-        #         from scipy.spatial.distance import cdist
-        #         np.random.seed(2)
-        #         ns = [11, 23, 13]
-        #         max_dist = 0.1
-        #         point_lst = [np.random.random(size= (n_j, 2)) for n_j in ns]
-        #         cost_lst = [cdist(point_lst[i], point_lst[i+1]) for i in range(len(point_lst)-1)]
-        #         match1 = multi_match.Multi_Matching(point_lst, max_dist=max_dist, cost_matrix_lst=cost_lst,
-        #         method="triplets first")
-        #         match2 = multi_match.Multi_Matching(point_lst, max_dist=max_dist, cost_matrix_lst=None, 
-        #         method="triplets first")
-        #         # And count the number of different objects in the image:
-        #         num_obj = match1.count_objects()
-        #         true_num_obj = match2.count_objects()
-        #         assert true_num_obj == num_obj
+        def test_costum_cost_triplets(self):
+                from scipy.spatial.distance import cdist
+                np.random.seed(2)
+                ns = [11, 23, 13]
+                max_dist = 0.1
+                point_lst = [np.random.random(size= (n_j, 2)) for n_j in ns]
+                cost_lst = [cdist(point_lst[i], point_lst[i+1]) for i in range(len(point_lst)-1)]
+                match1 = multi_match.Multi_Matching(point_lst, max_dist=max_dist,
+                method="triplets first", cost_list=cost_lst)
+                match2 = multi_match.Multi_Matching(point_lst, max_dist=max_dist, 
+                method="triplets first")
+                # And count the number of different objects in the image:
+                num_obj = match1.count_objects()
+                true_num_obj = match2.count_objects()
+                assert true_num_obj == num_obj
 
 if __name__ == '__main__':
         unittest.main()

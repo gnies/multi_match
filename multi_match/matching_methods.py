@@ -2,28 +2,34 @@ import numpy as np
 from multi_match.p_match import maximal_pair_match, create_partial_match_matrix
 from multi_match.t_match import maximal_triplet_match
 
-def match_all(x, y, z, maxdist):
+def match_all(c_xy, c_yz, maxdist):
     """Find first triplets ABC, then pairs AB and BC. """
 
+    n_x, n_y = c_xy.shape
+    n_y, n_z = c_yz.shape
+
     # Find maximal number of triplets and add them
-    I, J, K = maximal_triplet_match(x, y, z, maxdist)
+    I, J, K = maximal_triplet_match(c_xy, c_yz, maxdist)
     if len(I) == 0:
-        res = match_pairwise([x, y, z], maxdist)
+        res = match_pairwise([c_xy, c_yz], maxdist)
     else:
-        IJK = np.vstack([I, J, K]).T
-        # remove matched points
-        mask_I = np.zeros(len(x), dtype=bool)
-        mask_J = np.zeros(len(y), dtype=bool)
-        mask_K = np.zeros(len(z), dtype=bool)
+        mask_I = np.zeros(n_x, dtype=bool)
+        mask_J = np.zeros(n_y, dtype=bool)
+        mask_K = np.zeros(n_z, dtype=bool)
         mask_I[I] = True
         mask_J[J] = True
         mask_K[K] = True
-        x_new = x[np.where(~mask_I)]
-        y_new = y[np.where(~mask_J)]
-        z_new = z[np.where(~mask_K)]
-        sub_match = match_pairwise([x_new, y_new, z_new], maxdist)
+        c_xy = c_xy[~mask_I, :]
+        c_xy = c_xy[:, ~mask_J]
+        c_yz = c_yz[~mask_J, :]
+        c_yz = c_yz[:, ~mask_K]
+
+        sub_match = match_pairwise([c_xy, c_yz], maxdist)
 
         # convert indicies of match between x_new, y_new and z_new to indicies of x, y and z:
+        IJK = np.vstack([I, J, K]).T
+        # remove matched points
+
         converted_match = - np.ones_like(sub_match, dtype=int)
         w0 = np.where(sub_match[:,0] != -1)
         a0 = np.where(~mask_I)[0]
@@ -40,13 +46,13 @@ def match_all(x, y, z, maxdist):
         res = res.astype(int)
     return res
 
-def match_pairwise(point_lst, maxdist):
+def match_pairwise(cost_list, maxdist):
     # create all pairwise matchings along the chain
     lst_of_partial_matchings = []
     i = 0
-    while len(point_lst[i:])>1:
-        I, J = maximal_pair_match(point_lst[i], point_lst[i+1], maxdist)
-        IJ = create_partial_match_matrix(point_lst[i], point_lst[i+1], I, J)
+    for c in cost_list:
+        I, J = maximal_pair_match(c, maxdist)
+        IJ = create_partial_match_matrix(c, I, J)
         lst_of_partial_matchings.append(IJ)
         i = i+1
 

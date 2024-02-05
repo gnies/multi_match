@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
 import pandas as pd
+from scipy.spatial.distance import cdist
 from .matching_methods import match_pairwise, match_all
 from .abbundance_estimation import _estimate_abundance
 from .confidence_ellipsoid import compute_confidence_ellipsiod_from_data, compute_confidence_box
@@ -12,7 +13,7 @@ class Multi_Matching(chain_collection):
     """
     This class detects chains given a set of point clouds and an interaction radious.
     """
-    def __init__(self, point_list, max_dist, method="triplets first"):
+    def __init__(self, point_list, max_dist, method="triplets first", cost_list=None):
         """
         Initializes a new instance of the Multi_Matching class.
         
@@ -20,6 +21,8 @@ class Multi_Matching(chain_collection):
             point_list (list): A list of numpy arrays, where each entry is an array of coordinates for a given point cloud.
             max_dist (float): A maximal interaction radius. Points will not be matched above this radius.
             method (str): The method used to detect chains. Can be "triplets first" or "pairwise".
+            cost_list (list): A list of cost matrices, where each entry is the cost matrix between consecutive point clouds in point_list.
+                              if cost_list is None, the cost matrices are computed using the euclidean distance.
         """
         # Convert each array in point_list to a numpy array
         self.point_list = [np.asarray(points) for points in point_list]
@@ -36,7 +39,7 @@ class Multi_Matching(chain_collection):
         self.label_list =  create_label_list(self.possible_objects, prefix="w_") 
 
         # we compute the assignment matrix
-        self.index_assignment = compute_assignment(self.point_list, max_dist, method)
+        self.index_assignment = compute_assignment(self.point_list, max_dist, method, cost_list=cost_list)
 
         # we compute a list with all objects we detect
         self.all_objects = get_all_objects(self.point_list, self.index_assignment)
@@ -72,11 +75,12 @@ class Multi_Matching(chain_collection):
 
 class Multi_Matching_Over_Range:
     """ This class serves to plot and count the number of chains given a set of point clouds and an range of maximal interaction distance values."""
-    def __init__(self, point_list, max_dist_range, method="triplets first"):
+    def __init__(self, point_list, max_dist_range, method="triplets first", cost_list=None):
         self.point_list = [np.asarray(points) for points in point_list]
         self.max_dist_range = max_dist_range
         self.method = method
         self.color_channel_num = len(point_list)
+        self.cost_list = cost_list
 
         # we create a list of all possibe chain-like objects
         self.possible_objects = get_all_subchains(self.color_channel_num)
@@ -104,7 +108,7 @@ class Multi_Matching_Over_Range:
         min_slider_val = self.max_dist_range[0]
         max_slider_val = self.max_dist_range[-1]
         init_max_dist = (min_slider_val + max_slider_val)/2
-        init_match = Multi_Matching(self.point_list, init_max_dist, method=self.method)
+        init_match = Multi_Matching(self.point_list, init_max_dist, method=self.method, cost_list=self.cost_list)
         slid = Slider(ax_slider, "max dist",
                 min_slider_val, max_slider_val, valinit=init_max_dist,
                 initcolor='none')
@@ -122,7 +126,7 @@ class Multi_Matching_Over_Range:
                 for circle in circle_collection.patches:
                     circle.set_radius(radius)
             current_match = Multi_Matching(self.point_list, max_matching_dist,
-                    method=self.method)
+                    method=self.method, cost_list=self.cost_list)
             num_obj = current_match.count_objects()
             ax.set_title(str(num_obj), fontsize=fontsize)
             segs = current_match.get_all_links()
@@ -141,7 +145,7 @@ class Multi_Matching_Over_Range:
         data = pd.DataFrame(columns=columns)
         for i in range(len(self.max_dist_range)):
             maxdist = self.max_dist_range[i]
-            match = Multi_Matching(self.point_list, maxdist, method=self.method)
+            match = Multi_Matching(self.point_list, maxdist, method=self.method, cost_list=self.cost_list)
             vals = match.count_objects()
             data.loc[i] = np.asarray([vals[col] if col !="maxdist" else maxdist for col in columns])
         self.number_of_objects = data
@@ -213,15 +217,17 @@ class Multi_Matching_Over_Range:
         if show == True:
             plt.show()
 
-def compute_assignment(point_list, max_dist, method):
+def compute_assignment(point_list, max_dist, method, cost_list=None):
+    if cost_list is None:
+        cost_list = [cdist(point_list[i], point_list[i+1]) for i in range(len(point_list)-1)]
     if method == "triplets first":
         if len(point_list) != 3:
             raise Exception("This method currently works for matching three point clouds only. Try setting method=\"pairwise\"")
         else:
-            x, y, z = point_list
-            assignment = match_all(x, y, z, max_dist)
+            c_xy, c_yz = cost_list
+            assignment = match_all(c_xy, c_yz, max_dist)
     elif method == "pairwise":
-        assignment = match_pairwise(point_list, max_dist)
+        assignment = match_pairwise(cost_list, max_dist)
     else:
         raise Exception("Method not implemented, try setting method=\"pairwise\" or method=\"triplets first\"")
     return assignment
