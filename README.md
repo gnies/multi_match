@@ -1,6 +1,6 @@
 # Multi-Match
 
-This repository includes a Python package to perform object-based multi-color colocalization analysis on super-resolution microscopy data using tools from optimal transport. Its algorithms are based on a soon to be published article called "MultiMatch: Optimal Matching Colocalization in Multi-Color Super-Resolution Microscopy" by Julia Naas, Giacomo Nies, Housen Li, Stefan Stoldt, Bernhard Schmitzer, Stefan Jakobs and Axel Munk.
+This repository includes a Python package to perform object-based multi-color colocalization analysis on super-resolution microscopy data using tools from optimal transport. Its algorithms are based on a soon to be published article called "MultiMatch: Geometry-Informed Colocalization in Multi-Color Super-Resolution Microscopy" by Julia Naas, Giacomo Nies, Housen Li, Stefan Stoldt, Bernhard Schmitzer, Stefan Jakobs and Axel Munk.
 
 #### Pip installation
 
@@ -83,4 +83,4 @@ You can interactively modify the maximum matching radius, as shown in the provid
 
 This repository contains software related to a paper that has not been published: 
 
-"MultiMatch: Optimal Matching Colocalization in Multi-Color Super-Resolution Microscopy" by Julia Naas, Giacomo Nies, Housen Li, Stefan Stoldt, Bernhard Schmitzer, Stefan Jakobs and Axel Munk. 
+"MultiMatch: Geometry-Informed Colocalization in Multi-Color Super-Resolution Microscopy" by Julia Naas, Giacomo Nies, Housen Li, Stefan Stoldt, Bernhard Schmitzer, Stefan Jakobs and Axel Munk. 
