@@ -11,7 +11,7 @@ Reference
 None so far
 """
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 # funcitons to expose:
 from .matching_classes import Multi_Matching, Multi_Matching_Over_Range

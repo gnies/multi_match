@@ -7,7 +7,7 @@ with open(os.path.join(ROOT, 'README.md'), encoding="utf-8") as f:
 
 # version 1
 setup(name='multi_match',
-      version='0.0.1',
+      version='0.0.2',
       description='A package to detect chains.',
      author='Thomas Giacomo Nies',
       author_email='thomas.nies@uni-goettingen.de',

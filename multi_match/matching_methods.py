@@ -1,17 +1,20 @@
 import numpy as np
-from multi_match.p_match import maximal_pair_match, create_partial_match_matrix
-from multi_match.t_match import maximal_triplet_match
+from multi_match.p_match import maximal_pair_match, create_partial_match_matrix, penalized_pair_match
+from multi_match.t_match import maximal_triplet_match, penalized_triplet_match
 
-def match_all(c_xy, c_yz, maxdist):
+def match_all(c_xy, c_yz, maxdist, lam):
     """Find first triplets ABC, then pairs AB and BC. """
 
     n_x, n_y = c_xy.shape
     n_y, n_z = c_yz.shape
 
     # Find maximal number of triplets and add them
-    I, J, K = maximal_triplet_match(c_xy, c_yz, maxdist)
+    if lam == "max":
+        I, J, K = maximal_triplet_match(c_xy, c_yz, maxdist)
+    else:
+        I, J, K = penalized_triplet_match(c_xy, c_yz, maxdist, lam)
     if len(I) == 0:
-        res = match_pairwise([c_xy, c_yz], maxdist)
+        res = match_pairwise([c_xy, c_yz], maxdist, lam)
     else:
         mask_I = np.zeros(n_x, dtype=bool)
         mask_J = np.zeros(n_y, dtype=bool)
@@ -24,7 +27,7 @@ def match_all(c_xy, c_yz, maxdist):
         c_yz = c_yz[~mask_J, :]
         c_yz = c_yz[:, ~mask_K]
 
-        sub_match = match_pairwise([c_xy, c_yz], maxdist)
+        sub_match = match_pairwise([c_xy, c_yz], maxdist, lam)
 
         # convert indicies of match between x_new, y_new and z_new to indicies of x, y and z:
         IJK = np.vstack([I, J, K]).T
@@ -46,12 +49,15 @@ def match_all(c_xy, c_yz, maxdist):
         res = res.astype(int)
     return res
 
-def match_pairwise(cost_list, maxdist):
+def match_pairwise(cost_list, maxdist, lam):
     # create all pairwise matchings along the chain
     lst_of_partial_matchings = []
     i = 0
     for c in cost_list:
-        I, J = maximal_pair_match(c, maxdist)
+        if lam == "max":
+            I, J = maximal_pair_match(c, maxdist)
+        else:
+            I, J = penalized_pair_match(c, maxdist, lam)
         IJ = create_partial_match_matrix(c, I, J)
         lst_of_partial_matchings.append(IJ)
         i = i+1

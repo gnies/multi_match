@@ -31,7 +31,7 @@ class TestSum(unittest.TestCase):
                 ns = [11, 23, 13, 9]
                 max_dist = 0.1
                 point_lst = [np.random.random(size= (n_j, 2)) for n_j in ns]
-                match = multi_match.Multi_Matching(point_lst, max_dist=max_dist,
+                match = multi_match.Multi_Matching(point_lst, max_dist,
                         method="pairwise")
                 # And count the number of different objects in the image:
                 num_obj = match.count_objects()
@@ -47,7 +47,7 @@ class TestSum(unittest.TestCase):
                 max_dist = 0.1
                 point_lst = [np.random.random(size= (n_j, 2)) for n_j in ns]
                 cost_lst = [cdist(point_lst[i], point_lst[i+1]) for i in range(len(point_lst)-1)]
-                match = multi_match.Multi_Matching(point_lst, max_dist=max_dist,
+                match = multi_match.Multi_Matching(point_lst, max_dist,
                 method="pairwise", cost_list=cost_lst)
                 # And count the number of different objects in the image:
                 num_obj = match.count_objects()
@@ -63,9 +63,9 @@ class TestSum(unittest.TestCase):
                 max_dist = 0.1
                 point_lst = [np.random.random(size= (n_j, 2)) for n_j in ns]
                 cost_lst = [cdist(point_lst[i], point_lst[i+1]) for i in range(len(point_lst)-1)]
-                match1 = multi_match.Multi_Matching(point_lst, max_dist=max_dist,
+                match1 = multi_match.Multi_Matching(point_lst, max_dist,
                 method="triplets first", cost_list=cost_lst)
-                match2 = multi_match.Multi_Matching(point_lst, max_dist=max_dist, 
+                match2 = multi_match.Multi_Matching(point_lst, max_dist, 
                 method="triplets first")
                 # And count the number of different objects in the image:
                 num_obj = match1.count_objects()

@@ -33,8 +33,8 @@ y = multi_match.point_detection(image_B)
 z = multi_match.point_detection(image_C)
 
 # And find the matching within a certain distance
-maxdist = 3.5 # in pixel size
-match = multi_match.Multi_Matching([x, y, z], maxdist)
+t = 3.5 # in pixel size
+match = multi_match.Multi_Matching([x, y, z], t)
 
 # And count the number of different objects in the image:
 num_obj = match.count_objects()

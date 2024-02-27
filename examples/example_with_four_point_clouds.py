@@ -7,7 +7,7 @@ ns = [11, 23, 13, 9]
 max_dist = 0.1
 colors = ["red", "green", "blue", "yellow"]
 point_lst = [np.random.random(size= (n_j, 2)) for n_j in ns]
-match = multi_match.Multi_Matching(point_lst, max_dist=max_dist, method="pairwise")
+match = multi_match.Multi_Matching(point_lst, max_dist, method="pairwise")
 # And count the number of different objects in the image:
 num_obj = match.count_objects()
 for key, value in num_obj.items():

@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: multi_match
-Version: 0.0.1
+Version: 0.0.2
 Summary: A package to detect chains.
 Author: Thomas Giacomo Nies
 Author-email: thomas.nies@uni-goettingen.de
@@ -17,13 +17,13 @@ Requires-Dist: pandas
 
 # Multi-Match
 
-This repository includes a Python package to perform object-based multi-color colocalization analysis on super-resolution microscopy data using tools from optimal transport. Its algorithms are based on a soon to be published article called "MultiMatch: Optimal Matching Colocalization in Multi-Color Super-Resolution Microscopy" by Julia Naas, Giacomo Nies, Housen Li, Stefan Stoldt, Bernhard Schmitzer, Stefan Jakobs and Axel Munk.
+This repository includes a Python package to perform object-based multi-color colocalization analysis on super-resolution microscopy data using tools from optimal transport. Its algorithms are based on a soon to be published article called "MultiMatch: Geometry-Informed Colocalization in Multi-Color Super-Resolution Microscopy" by Julia Naas, Giacomo Nies, Housen Li, Stefan Stoldt, Bernhard Schmitzer, Stefan Jakobs and Axel Munk.
 
 #### Pip installation
 
 One can install this package with pip by executing the following comand:
 ```console
-pip install https://github.com/gnies/multi_match
+pip install git+https://github.com/gnies/multi_match
 ```
 
 #### Short example
@@ -50,8 +50,8 @@ y = multi_match.point_detection(image_B)
 z = multi_match.point_detection(image_C)
 
 # And find the matching within a certain distance
-maxdist = 3.5 # in pixel size
-match = multi_match.Multi_Matching([x, y, z], maxdist)
+t = 3.5 # in pixel size
+match = multi_match.Multi_Matching([x, y, z], t)
 
 # And count the number of different objects in the image:
 num_obj = match.count_objects()
@@ -100,4 +100,4 @@ You can interactively modify the maximum matching radius, as shown in the provid
 
 This repository contains software related to a paper that has not been published: 
 
-"MultiMatch: Optimal Matching Colocalization in Multi-Color Super-Resolution Microscopy" by Julia Naas, Giacomo Nies, Housen Li, Stefan Stoldt, Bernhard Schmitzer, Stefan Jakobs and Axel Munk. 
+"MultiMatch: Geometry-Informed Colocalization in Multi-Color Super-Resolution Microscopy" by Julia Naas, Giacomo Nies, Housen Li, Stefan Stoldt, Bernhard Schmitzer, Stefan Jakobs and Axel Munk. 

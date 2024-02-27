@@ -25,13 +25,12 @@ image_C = io.imread(file_C)
 x = multi_match.point_detection(image_A)
 y = multi_match.point_detection(image_B)
 z = multi_match.point_detection(image_C)
-mmr = multi_match.Multi_Matching_Over_Range([x, y, z], max_dist_range)
+mmr = multi_match.Multi_Matching_Over_Range([x, y, z], max_dist_range, method="triplets first")
 
 # number of chains detected for each max_dist value
-range_match = multi_match.Multi_Matching_Over_Range([x, y, z], max_dist_range)
-W = range_match.count_objects()
+W = mmr.count_objects()
 print(W)
-range_match.plot_number_of_objects()
+mmr.plot_number_of_objects()
 
 ### We now plot the matching with a slider for the max distance
 cmaps = ['pure_red','pure_green', 'pure_blue']
