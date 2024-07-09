@@ -9,7 +9,7 @@ with open(os.path.join(ROOT, 'README.md'), encoding="utf-8") as f:
 setup(name='multi_match',
       version='0.0.1',
       description='A package to detect chains.',
-     author='Thomas Giacomo Nies',
+      author='Thomas Giacomo Nies',
       author_email='thomas.nies@uni-goettingen.de',
       long_description_content_type="text/markdown",
       long_description=README,
@@ -21,8 +21,8 @@ setup(name='multi_match',
           'ortools>=9.4',
           'scipy',
           'matplotlib',
-           'scikit-image',
-           'matplotlib_scalebar',
-           'pandas'
+          'scikit-image',
+          'matplotlib_scalebar',
+          'pandas'
       ],
       zip_safe=False)
