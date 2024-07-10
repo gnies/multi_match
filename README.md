@@ -6,9 +6,9 @@ This repository includes a Python package to perform object-based multi-color co
 
 One can install this package with pip by executing the following comand:
 ```console
-pip install git+https://github.com/gnies/multi_match
+python3 -m pip install git+https://github.com/gnies/multi_match
 ```
-
+More information about python package installation can be found in the [python documentation](https://docs.python.org/3/installing/index.html).
 #### Short example
 
 This example illustates how to use `multi_match` to compute the abundance of chain like structures in a three channel super-resolution microscopy image.
